@@ -1,3 +1,11 @@
 spring:
   application:
     name: patternAtlas
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pattern_atlas
+    username: atlas
+    password: atlasPassword
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
