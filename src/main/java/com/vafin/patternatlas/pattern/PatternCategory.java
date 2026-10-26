@@ -1,4 +1,4 @@
-package com.vafin.patternatlas;
+package com.vafin.patternatlas.pattern;
 
 public enum PatternCategory {
     CREATIONAL,
