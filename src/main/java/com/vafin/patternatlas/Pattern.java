@@ -13,6 +13,7 @@ public class Pattern {
     private Integer id;
     @Column(nullable = false, unique = true)
     private String name;
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private PatternCategory category;
     private String shortDescription;
