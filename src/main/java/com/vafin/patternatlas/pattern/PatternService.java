@@ -22,6 +22,12 @@ public class PatternService {
         return patternResponses;
     }
 
+    public List<PatternResponse> findByCategory(PatternCategory category) {
+        return patternRepository.findByCategory(category).stream()
+                .map(PatternResponse::from)
+                .toList();
+    }
+
     public PatternResponse findById(Integer id) {
         Pattern foundPattern = patternRepository.findById(id).orElseThrow(() -> new PatternNotFoundException(id));
         return PatternResponse.from(foundPattern);

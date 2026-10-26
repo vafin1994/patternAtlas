@@ -13,6 +13,12 @@ Content-Type: application/json
 ### All Patterns
 GET http://localhost:8080/api/patterns
 
+### Creational Patterns
+GET http://localhost:8080/api/patterns?category=CREATIONAL
+
+### Wrong Patterns category
+GET http://localhost:8080/api/patterns?category=CREATIONAL
+
 ### One Pattern
 GET http://localhost:8080/api/patterns/1
 

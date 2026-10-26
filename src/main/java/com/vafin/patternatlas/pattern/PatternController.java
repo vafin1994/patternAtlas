@@ -16,8 +16,12 @@ public class PatternController {
     private final PatternService patternService;
 
     @GetMapping()
-    public List<PatternResponse> getAll() {
+    public List<PatternResponse> getAll(@RequestParam(required = false) PatternCategory category) {
+        if(category == null) {
         return patternService.findAll();
+        } else {
+            return patternService.findByCategory(category);
+        }
     }
 
     @GetMapping("/{id}")
