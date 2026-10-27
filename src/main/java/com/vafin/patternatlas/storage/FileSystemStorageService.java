@@ -29,6 +29,10 @@ public class FileSystemStorageService implements StorageService {
     }
 
     public String store(MultipartFile file) {
+        String contentType = file.getContentType();
+        if (file.isEmpty() || contentType == null || !contentType.startsWith("image/")) {
+            throw new InvalidFileException("File is empty or has a wrong format");
+        }
         String fileExtension = StringUtils.getFilenameExtension(file.getOriginalFilename());
         String fileName = UUID.randomUUID() + "." + fileExtension;
         try (InputStream inputStream = file.getInputStream()) {
