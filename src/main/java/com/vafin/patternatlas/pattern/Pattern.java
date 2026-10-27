@@ -19,13 +19,12 @@ public class Pattern {
     private String shortDescription;
     @Column(columnDefinition = "TEXT")
     private String description;
+    @Column()
+    private String imagePath;
 
     public static Pattern from(PatternRequest patternRequest) {
         Pattern pattern = new Pattern();
-        pattern.setName(patternRequest.name());
-        pattern.setCategory(patternRequest.category());
-        pattern.setDescription(patternRequest.description());
-        pattern.setShortDescription(patternRequest.shortDescription());
+        pattern.apply(patternRequest);
         return pattern;
     }
 

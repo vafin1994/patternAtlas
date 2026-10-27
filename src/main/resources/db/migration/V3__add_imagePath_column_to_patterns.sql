@@ -1,0 +1,1 @@
+ALTER TABLE public.pattern ADD COLUMN image_path varchar(255);
