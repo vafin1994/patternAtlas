@@ -1,8 +1,12 @@
 package com.vafin.patternatlas.pattern;
 
+import com.vafin.patternatlas.storage.StorageFileNotFoundException;
+import com.vafin.patternatlas.storage.StorageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PatternService {
     private final PatternRepository patternRepository;
+    private final StorageService storageService;
 
     public List<PatternResponse> findAll() {
         List<Pattern> patterns = patternRepository.findAll();
@@ -50,5 +55,21 @@ public class PatternService {
     public void deleteById(Integer id) {
         Pattern patternToDelete = patternRepository.findById(id).orElseThrow(() -> new PatternNotFoundException(id));
         patternRepository.delete(patternToDelete);
+    }
+
+    @Transactional
+    public PatternResponse uploadImage(Integer id, MultipartFile file) {
+        Pattern pattern = patternRepository.findById(id).orElseThrow(() -> new PatternNotFoundException(id));
+        String imagePath = storageService.store(file);
+        pattern.setImagePath(imagePath);
+        return PatternResponse.from(pattern);
+    }
+
+    public Resource loadImage(Integer id) {
+        Pattern pattern = patternRepository.findById(id).orElseThrow(() -> new PatternNotFoundException(id));
+        if (pattern.getImagePath() == null) {
+            throw new StorageFileNotFoundException("Pattern " + id + " has no image");
+        }
+        return storageService.load(pattern.getImagePath());
     }
 }

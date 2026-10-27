@@ -2,8 +2,13 @@ package com.vafin.patternatlas.pattern;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.MediaTypeFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -44,5 +49,17 @@ public class PatternController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable Integer id) {
         patternService.deleteById(id);
+    }
+
+    @GetMapping("/{id}/image")
+    public ResponseEntity<Resource> getImage(@PathVariable Integer id) {
+        Resource image = patternService.loadImage(id);
+        MediaType type = MediaTypeFactory.getMediaType(image).orElse(MediaType.APPLICATION_OCTET_STREAM);
+        return  ResponseEntity.ok().contentType(type).body(image);
+    }
+
+    @PostMapping("/{id}/image")
+    public PatternResponse uploadImage(@PathVariable Integer id, @RequestParam("file") MultipartFile file) {
+        return patternService.uploadImage(id, file);
     }
 }

@@ -9,3 +9,5 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
+storage:
+  location: ./uploads
