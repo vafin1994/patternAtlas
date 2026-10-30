@@ -1,0 +1,40 @@
+<button routerLink="/patterns" class="nes-btn back-button">&lt; Back</button>
+
+@if (pattern.isLoading()) {
+  <p>Loading...</p>
+} @else if (pattern.error()) {
+  <div class="nes-container is-rounded">
+    <p class="nes-text is-error">Pattern not found</p>
+  </div>
+} @else if (pattern.value(); as p) {
+  <section class="nes-container is-rounded pattern-detail">
+    <div class="hero">
+      <div class="image-frame">
+        <img [src]="p.imageUrl ?? 'placeholder.svg'" [alt]="p.name">
+      </div>
+      <div class="info">
+        <h2 class="nes-text is-primary">{{ p.name }}</h2>
+        <span class="category" [class]="'category is-' + p.category.toLowerCase()">
+          {{ p.category }}
+        </span>
+        <p class="short">{{ p.shortDescription }}</p>
+      </div>
+    </div>
+
+    <div class="description">{{ p.description }}</div>
+
+    <div class="actions">
+      <button [routerLink]="['/patterns', p.id, 'edit']" class="nes-btn is-primary">Edit</button>
+      <button (click)="deleteDialog.showModal()" class="nes-btn is-error">Delete</button>
+    </div>
+  </section>
+
+  <dialog #deleteDialog class="nes-dialog is-rounded">
+    <p class="title">Delete pattern?</p>
+    <p>"{{ p.name }}" will be gone for good.</p>
+    <menu class="dialog-menu">
+      <button class="nes-btn" (click)="deleteDialog.close()">Cancel</button>
+      <button class="nes-btn is-error" (click)="deletePattern(p.id)">Delete</button>
+    </menu>
+  </dialog>
+}

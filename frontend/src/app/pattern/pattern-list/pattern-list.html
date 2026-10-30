@@ -29,7 +29,7 @@
 } @else {
   <div class="pattern-list">
     @for (pattern of patternsList.value(); track pattern.id) {
-      <div class="nes-container is-centered is-rounded pattern-item">
+      <div [routerLink]=`${pattern.id}` class="nes-container is-centered is-rounded nes-pointer pattern-item">
         <h3 class="title nes-text is-primary">{{ pattern.name }}</h3>
         <div class="image-wrapper">
           <img [src]="pattern.imageUrl ?? 'placeholder.svg'" [alt]='pattern.name'>
