@@ -1,5 +1,9 @@
 <form [formGroup]="patternForm" (ngSubmit)="onFormSubmit()" class="nes-container with-title is-rounded is-dark">
-  <p class="title">Create a new pattern</p>
+  @if (mode === 'new') {
+    <p class="title">Create a New Pattern</p>
+  } @else {
+    <p class="title">Edit Pattern</p>
+  }
   <!--  NAME-->
   <div class="nes-field">
     <label for="name_field">Pattern Name</label>
@@ -33,13 +37,15 @@
   @if (previewUrl(); as url) {
     <div class="preview-image">
       <img [src]="url" alt="selected image">
-      <button (click)="onFileRemove()" class="nes-btn is-warning">Remove Image</button>
+      @if (selectedFile) {
+        <button type="button" (click)="onFileRemove()" class="nes-btn is-warning">Remove Image</button>
+      }
     </div>
   }
   <div class="nes-field">
     <label class="nes-btn">
       <span>Select Image</span>
-      <input (change)="onFileSelect($event)" type="file">
+      <input accept="image/*" (change)="onFileSelect($event)" type="file">
     </label>
   </div>
   <button [disabled]="patternForm.invalid" type="submit" class="nes-btn is-success form-button"
@@ -47,5 +53,11 @@
   </button>
 </form>
 
+<div class="back-row">
+  @if(mode === 'new') {
+    <button routerLink="/patterns" class="nes-btn"> &lt; Back to list</button>
+  } @else {
+    <button [routerLink]="['/patterns', patternId]" class="nes-btn is-warning">&lt; Back to pattern details</button>
+  }
+</div>
 
-<button routerLink="/patterns" class="nes-btn">< Back to list</button>
