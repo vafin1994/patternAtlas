@@ -1,0 +1,51 @@
+<form [formGroup]="patternForm" (ngSubmit)="onFormSubmit()" class="nes-container with-title is-rounded is-dark">
+  <p class="title">Create a new pattern</p>
+  <!--  NAME-->
+  <div class="nes-field">
+    <label for="name_field">Pattern Name</label>
+    <input maxlength="255" type="text" id="name_field" class="nes-input"
+           formControlName="name">
+  </div>
+  <!--  CATEGORY-->
+  <div class="nes-field">
+    <label for="default_select">Pattern Category</label>
+    <div class="nes-select">
+      <select required id="default_select" formControlName="category">
+        <option [ngValue]="null" disabled>Choose category</option>
+        <option value="CREATIONAL">CREATIONAL</option>
+        <option value="STRUCTURAL">STRUCTURAL</option>
+        <option value="BEHAVIORAL">BEHAVIORAL</option>
+      </select>
+    </div>
+  </div>
+  <!--  Short Description-->
+  <div class="nes-field">
+    <label for="short-desc">Short Description</label>
+    <textarea formControlName="shortDescription" id="short-desc" maxlength="255"
+              class="nes-textarea"></textarea>
+  </div>
+  <!--  Description-->
+  <div class="nes-field">
+    <label for="desc">Full Description</label>
+    <textarea formControlName="description" rows="10" id="desc" maxlength="10000" class="nes-textarea"></textarea>
+  </div>
+  <!--  Image-->
+  @if (previewUrl(); as url) {
+    <div class="preview-image">
+      <img [src]="url" alt="selected image">
+      <button (click)="onFileRemove()" class="nes-btn is-warning">Remove Image</button>
+    </div>
+  }
+  <div class="nes-field">
+    <label class="nes-btn">
+      <span>Select Image</span>
+      <input (change)="onFileSelect($event)" type="file">
+    </label>
+  </div>
+  <button [disabled]="patternForm.invalid" type="submit" class="nes-btn is-success form-button"
+          [class.is-disabled]="patternForm.invalid">Submit
+  </button>
+</form>
+
+
+<button routerLink="/patterns" class="nes-btn">< Back to list</button>

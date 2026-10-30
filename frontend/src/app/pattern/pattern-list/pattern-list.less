@@ -1,0 +1,45 @@
+.category-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  .nes-btn.active {
+    transform: translateY(4px);
+    box-shadow: inset 0 4px #adafbc;
+  }
+}
+
+.pattern-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+
+  .pattern-item {
+
+    background: antiquewhite;
+    width: 100%;
+    max-width: 500px;
+
+    .image-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        max-height: 150px;
+        image-rendering: pixelated;
+      }
+    }
+
+    .description-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+  }
+}

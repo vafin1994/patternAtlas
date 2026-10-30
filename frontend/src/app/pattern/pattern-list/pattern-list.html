@@ -1,0 +1,50 @@
+<div>
+  <button type="button" class="nes-btn is-primary" routerLink='new'>+ Add New</button>
+</div>
+<div class="nes-container is-centered category-container">
+  <button (click)="selectCategory()" type="button" class="nes-btn" [class.active]="selectedCategory() === undefined">
+    ALL
+  </button>
+  <button (click)="selectCategory('CREATIONAL')" type="button" class="nes-btn is-primary"
+          [class.active]="selectedCategory() === 'CREATIONAL'">CREATIONAL
+  </button>
+  <button (click)="selectCategory('STRUCTURAL')" type="button" class="nes-btn is-success"
+          [class.active]="selectedCategory() === 'STRUCTURAL'">STRUCTURAL
+  </button>
+  <button (click)="selectCategory('BEHAVIORAL')" type="button" class="nes-btn is-warning"
+          [class.active]="selectedCategory() === 'BEHAVIORAL'">BEHAVIORAL
+  </button>
+</div>
+
+@if (patternsList.isLoading()) {
+  <div class="nes-container">
+    <p>Loading</p>
+    <!--      TODO do loading animation-->
+    <progress class="nes-progress is-pattern" value="50" max="100"></progress>
+  </div>
+} @else if (patternsList.error()) {
+  <div class="nes-container">
+    <p>Could not load patterns</p>
+  </div>
+} @else {
+  <div class="pattern-list">
+    @for (pattern of patternsList.value(); track pattern.id) {
+      <div class="nes-container is-centered is-rounded pattern-item">
+        <h3 class="title nes-text is-primary">{{ pattern.name }}</h3>
+        <div class="image-wrapper">
+          <img [src]="pattern.imageUrl ?? 'placeholder.svg'" [alt]='pattern.name'>
+        </div>
+        <div class="description-wrapper">
+          <span>{{ pattern.shortDescription }}</span>
+        </div>
+      </div>
+    } @empty {
+      <div class="nes-container">
+        There are no patterns yet, maybe it's time to add one
+        <div>
+          <button type="button" class="nes-btn is-primary" routerLink='new'>Add</button>
+        </div>
+      </div>
+    }
+  </div>
+}
