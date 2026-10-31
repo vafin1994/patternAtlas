@@ -2,12 +2,17 @@ spring:
   application:
     name: patternAtlas
   datasource:
-    url: jdbc:postgresql://localhost:5432/pattern_atlas
-    username: atlas
-    password: atlasPassword
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:pattern_atlas}
+    username: ${DB_USERNAME:atlas}
+    password: ${DB_PASSWORD:atlasPassword}
+  servlet:
+    multipart:
+    max-file-size: 5MB
+    max-request-size: 5MB
   jpa:
     hibernate:
       ddl-auto: validate
     show-sql: true
 storage:
-  location: ./uploads
+  location: ${STORAGE_LOCATION:./uploads}
+
